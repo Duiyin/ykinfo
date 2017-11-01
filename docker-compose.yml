@@ -1,0 +1,18 @@
+web:
+  image: youkke/ykinfo
+  ports:
+    - "6012:6012"
+  environment:
+    - VIRTUAL_HOST=localhost
+  links:
+    - redis:redis
+    - mariadb:mariadb
+redis:
+  image: redis:3
+mariadb:
+  image: mariadb
+  environment:
+    - MYSQL_ROOT_PASSWORD=123456
+    - MYSQL_DATABASE=ykinfo
+  volumes:
+    - ./src/main/docker:/docker-entrypoint-initdb.d

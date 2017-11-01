@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div style="" id="rsyncbox" class="col-md-12">
+          <div class="card">
+              <div class="">
+                <div class="card-header" style="padding-bottom:0;">
+                  <div class="media">
+                    <div class="pull-left"> <img alt="网信" th:src="@{${sessuser?.image}}" src="../static/img/banner19.jpg" class="lv-img"> </div>
+                    <div class="media-body">
+                      <h2 th:text="${sessuser?.nickname}">网信</h2>
+                      <i style="display: inline-block; font-size: 16px;" class="zmdi zmdi-caret-right zmdi-hc-fw"></i>
+                      <div class="form-group" style="margin:0; width:50px; display:inline-block; padding:0; vertical-align:middle;">
+                        <select id="select111" class="form-control">
+                          <option value="public" selected="selected">公开</option>
+                          <option value="private">保密</option>
+                          <option value="friend">好友</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div name="btn_box_asyncload_close" class="close-upload"><i class="zmdi zmdi-close"></i></div>
+                </div>
+                <form id="myForm" th:action="@{/info}" method="post">
+                <div class="panelBody card-padding">
+                  <div class="mdl-grid singelText">
+                    <div class="form-group label-floating">
+                      <label class="control-label" for="title">输入标题</label>
+                      <input class="form-control" id="title" type="text" name="title" th:value="${info?.title}">
+                    </div>
+                    <div name="div_content_load" class="textContent comShowInput form-group">
+                      <div class="fg-line">
+                        <textarea class="form-control" rows="5" placeholder="请输入..." name="content" style="" th:text="${info?.content}"></textarea>
+                      </div>
+                      <input class="form-control" id="title" type="text" name="title">
+                    </div>
+                    <div class="markdown"></div>
+                    <button data-type="markdown" name="switch_edit_content" type="button" class="btn btn-default btn-sm m-b-30 waves-effect">切换到Markdown编辑模式</button>
+                  </div>
+                  <div class="basic form-group"> <a class="dialog_photos m-r-30" data-type="info_create" title="上传照片" href="javascript:void(0);"><i class="tm-icon zmdi zmdi-camera"></i></a>
+                    <ul class="actions no-comment" style="display: inline-block; vertical-align: top;">
+                      <li class="dropdown action-show"> <a aria-expanded="false" data-toggle="dropdown" href="#"> <i class="zmdi zmdi-comment-alert zmdi-hc-fw"></i> </a>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                          <li><a href="javascript:void(0);" title="禁止评论" name="no-comment">禁止评论</a> </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--<div class="form-group p-timeline form-photolist">
+                    <div name="info_pub_photos" class="lightbox clearfix"> </div>
+                  </div>-->
+                  <div class="communityJoin text-right">
+                    <button name="btn_box_asyncload_close" type="button" class="btn btn-default btn-sm m-t-10 waves-effect">取消</button>
+                    <button name="btn_markdown_submit" type="button" class="btn btn-primary btn-sm m-t-10 waves-effect"><a class="update_a" th:href="@{'/info/' + ${info?.id}}"></a>提交</button>
+                    <input type="hidden" id="info_pub_id" name="mkey" value="">
+                    <input type="hidden" name="mt" value="forum">
+                    <input type="hidden" name="c" value="">
+                    <input type="hidden" name="cmcg" value="">
+                  </div>
+                </div>
+                </form>
+              </div>
+          </div>
+        </div>
+        
+      	<script src="../static/js/jquery-3.0.0.min.js" th:src="@{/js/jquery-3.0.0.min.js}"></script> 
+		<script src="../static/js/jquery-3.0.0.min.js" th:src="@{/js/jquery.form.js}"></script> 
+<script>
+$("*[name='btn_markdown_submit']").click(function(){
+	var formData = new FormData();
+	formData.append("scope", "public");
+	formData.append("markdown", "markdown");
+	formData.append("status", "home");
+	formData.append("like", "0");
+	formData.append("cmcount", "0");
+	formData.append("sharecount", "0");
+	formData.append("readcount", "0");
+	formData.append("ctime", "2015-08-24 18:11:58");
+	formData.append("content", $('*[name=content]').val());
+	formData.append("title", $('*[name=title]').val());
+    $.ajax({
+        url: $(".update_a").attr("href") ,  
+        type: 'POST',  
+        data: formData,  
+        async: true,  
+        cache: false,  
+        contentType: false,  
+        processData: false,  
+        success: function (returndata) {
+        	if(returndata.result == "success"){
+        		window.location.href = "/";
+        	}
+        },  
+        error: function (returndata) {  
+            alert("error");  
+        }  
+   });  
+});
+</script>
+</body>
+</html>

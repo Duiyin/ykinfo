@@ -1,0 +1,60 @@
+                <div class="wcl-list" name="comment_load_box" th:each="map,row:${info.split(2)}">
+                  <ul name="JCommentUl" class="comment-ul" th:remove="all-but-first">
+                    <li th:each="citem,subrow:${map.value}">
+                      <a target="_blank" href="#" title="缃戜俊" th:href="@{'/user/'+${citem?.user?.id}}">
+                        <img width="28px" height="28px" class="userimage" src="../static/img/header.jpg" alt="缃戜俊" th:src="@{${citem?.user?.image}}" th:alt="${citem?.user?.name}">
+                      </a>
+                      <div class="userdiv">
+                        <div class="user-info">
+                          <div class="name">
+                            <a target="_blank" href="#" th:href="@{'/u/'+${citem?.user?.id}}" title="缃戜俊" th:text="${citem?.user?.name}">缃戜俊</a>
+                          </div>
+                          <div class="time" th:text="${#dates.format(citem.ctime, 'yyyy-MM-dd')}">2017-02-10</div>
+                        </div>
+                        <!-- <div class="user-replay">
+                          <span class="replay" title="鍥炲">鍥炲</span> 
+                          <span class="report"><a href="javascript:void(0);" title="涓炬姤涓嶈壇淇℃伅"><i class="report-icon"></i></a></span>
+                        </div> -->
+                      </div>
+                      <div class="text" th:text="${citem?.content}">杩欐槸涓�鏉￠暱闀块暱鐨勮瘎璁鸿繖鏄竴鏉￠暱闀块暱鐨勮瘎璁鸿繖鏄竴鏉￠暱闀块暱鐨勮瘎璁鸿繖鏄竴鏉￠暱闀块暱鐨勮瘎璁鸿繖鏄竴鏉￠暱闀块暱鐨勮瘎璁�</div>
+                    </li>
+                  </ul>
+                </div>
+                
+<link rel="stylesheet" href="js/rateyo/jquery.rateyo.min.css">
+<link rel="stylesheet" href="js/rateyo/application.css">
+<script>
+$(function() {
+    $("[name='comment_box']").on("click", "[data-page]", function(e) {
+        console.log(this);
+        e.preventDefault();
+        e.stopPropagation();
+        var JCommentUl = $(this).closest("[name='comment_box']").find("[name='comment_load_box']");
+        try {
+            if (typeof($(this).data("page")) != "undefined" && $(this).data("page") > 0) { //缈婚〉鐨勯摼鎺ヤ笂鏈塸age灞炴��
+                cmpage = $(this).data("page");
+            } else {
+                cmpage = 1;
+            }
+            JCommentUl.load("cm_load.htm", {
+                mkey: $(this).data("mkey"),
+                type: $(this).data("type"),
+                page: cmpage
+            });
+        } catch (e) {};
+    });
+
+    $("[data-rate]").each(function(index, element) {
+        var score = $(this).data("rate");
+        if (score < 0) score = 0;
+        $(this).rateYo({
+            maxValue: 10,
+            precision: 0,
+            rating: score,
+            starWidth: "17px",
+            spacing: "5px",
+            readOnly: true,
+        });
+    });
+});
+</script>

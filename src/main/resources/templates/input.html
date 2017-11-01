@@ -1,0 +1,133 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+	<input class="form-control" id="title" type="text" name="title">
+	<div class="markdown">
+		<!--markdown-->
+		<div id="editormd" style="z-index: 50;">
+			<textarea name="markdown" class="textarea" style="display: none;"></textarea>
+		</div>
+	</div>
+	<input type="hidden" value="" name="content" id="content">
+	<button name="btn_box_asyncload_close" type="button" class="btn btn-default btn-sm m-t-10 waves-effect">取消</button>
+                    <button name="btn_submit" type="button" class="btn btn-primary btn-sm m-t-10 waves-effect">提交</button>
+	<script src="../static/js/jquery-3.0.0.min.js"
+		th:src="@{/js/jquery-3.0.0.min.js}"></script>
+	<link rel="stylesheet"
+		href="../static/js/editormd/css/editormd.min.css"
+		th:href="@{/js/editormd/css/editormd.min.css}" />
+	<script src="../static/js/editormd/editormd.min.js"
+		th:src="@{/js/editormd/editormd.min.js}"></script>
+	<script type="text/javascript">
+		var testEditor;
+
+		$(function() {
+			testEditor = editormd("editormd", {
+				width : "100%",
+				height : 500,
+				syncScrolling : "single",
+				path : "[[@{/js/editormd/lib/}]]"
+			});
+		});
+	</script>
+	<!--markdown end-->
+
+
+
+	<script src="../static/js/jquery-3.0.0.min.js"
+		th:src="@{/js/jquery.form.js}"></script>
+	
+<script src="/js/pace/pace.min.js" th:src="@{/js/pace/pace.min.js}"></script>
+  <link href="/js/pace/themes/pace-theme-barber-shop.css" th:href="@{/js/pace/themes/pace-theme-barber-shop.css}" rel="stylesheet" />
+
+	<script>
+		$(document).ready(function() {
+			
+			
+			$(document).on("click", "[name='btn_submit']", function() {
+				//CKupdate();
+				var reurl = $(this).data("url");
+				var form = $(this).parents("form");
+				$.post(form.attr("action"),form.serialize(),function(json){
+					if(json.msg == "success"){
+						$.globalMessenger().post({message:"操作成功",type:"error",hideAfter:2});
+						if (reurl != null) {
+							//console.log(reurl);
+							window.location.href = reurl;
+						} else {
+							window.location.href = "http://"+window.location.host+window.location.pathname+$.query.REMOVE("mkey");
+						}
+					}else{
+						$.globalMessenger().post({message:json.msglocale,type:"error",hideAfter:2});
+					}
+				},"json");
+			});
+		});
+		/* $("*[name='btn_submit']").click(function() {
+			var formData = new FormData();
+			formData.append("scope", "public");
+			formData.append("markdown", "markdown");
+			formData.append("status", "home");
+			formData.append("like", "0");
+			formData.append("cmcount", "0");
+			formData.append("sharecount", "0");
+			formData.append("readcount", "0");
+			formData.append("ctime", "2015-08-24 18:11:58");
+			formData.append("content", $('*[name=content]').val());
+			formData.append("title", $('*[name=title]').val());
+			$.ajax({
+				url : '/info',
+				type : 'POST',
+				data : formData,
+				async : true,
+				cache : false,
+				contentType : false,
+				processData : false,
+				success : function(returndata) {
+					if (returndata.result == "success") {
+						window.location.href = "/";
+					}
+				},
+				error : function(returndata) {
+					alert("error");
+				}
+			});
+		}); */
+		/*$(function(){
+		 $('form').ajaxForm({
+		 success: function(responseText){
+		 alert("发布成功");
+		 window.location.href="/";
+		 }
+		 });
+		 $('form').on("submit", function(e) {
+		 var formData = new FormData();
+		 formData.append("scope", "value");
+		 formData.append("markdown", "markdown");
+		 formData.append("status", "home");
+		 formData.append("like", "0");
+		 formData.append("cmcount", "0");
+		 formData.append("sharecount", "0");
+		 formData.append("readcount", "0");
+		 formData.append("ctime", "2015-08-24 18:11:58");
+		 formData.append("content", $('*[name=content]').val());
+		 formData.append("title", $('*[name=title]').val());
+		 e.preventDefault();
+
+		 var f = e.target,
+		 xhr = new XMLHttpRequest();
+
+		 xhr.open("POST", f.action);
+		 xhr.send(formData);
+		 }); 
+
+
+		 });*/
+	</script>
+</body>
+</html>

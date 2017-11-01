@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../static/css/material.min.css" th:href="@{/css/material.min.css}" />
+<link rel="stylesheet" href="../static/css/material-icon.css" th:href="@{/css/material-icon.css}" />
+<link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/ixstyle.css" th:href="@{/css/ixstyle.css}" />
+</head>
+
+<body style="background: #fff;">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header" id="header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title logo"><a href="index.html">WXINE</a></span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation" id="top-menu">
+        <!-- 头部的搜索 -->
+        <a class="mdl-navigation__link" href="javascript:void(0);" id="top-search"><i class="tm-icon material-icons">search</i></a>
+        <div id="top-search-wrap">
+          <div class="tsw-inner"> <i class="material-icons" id="top-search-close">search</i>
+            <form><input type="text" name="keyword"></form>
+          </div>
+        </div>
+        <!-- 头部的通知 -->
+        <div class="wrapper">
+          <a class="mdl-navigation__link" href="javascript:void(0);" id="top-notifications"><i class="tm-icon material-icons">notifications</i></a>
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect dropdown-menu-lg" for="top-notifications">
+            <div class="listview" id="notifications">
+              <div class="lv-header"> 消息提醒
+                <ul class="actions">
+                  <li class="dropdown"> <a href="javascript:void(0);" data-clear="notification" class="readall"> <i class="material-icons">done_all</i> </a> </li>
+                </ul>
+              </div>
+              <div class="lv-body"> </div>
+              <a class="lv-footer" href="javascript:void(0);">所有消息</a> 
+            </div>
+          </ul>
+        </div><!--wrapper end-->
+        <!-- 头部的聊天 -->
+        <a class="mdl-navigation__link" href="javascript:void(0);" id="chat_btn"><i class="tm-icon material-icons">comment</i></a>
+        <!-- 登陆前 -->
+        <!-- <a class="mdl-navigation__link login-register" href="login.html"><span>登录/注册</span></a> -->
+        <!-- 登陆后 -->
+        <div class="wrapper">
+          <a class="mdl-navigation__link" href="javascript:void(0);" id="top-thisuser">
+            <div class="pull-left user" id="demo-menu-lower-right3">
+              <img src="../static/img/logo.png" th:src="@{${sessuser?.image}}" alt="" height="32" width="32" /> 
+            </div>
+          </a>
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect dropdown-menu-lg" for="top-thisuser">
+            <div id="notifications" class="listview">
+              <div class="lv-header"> 个人信息 </div>
+              <div class="lv-body" style="min-height: initial;">
+                <div class="myInfo">
+                  <div class="myphoto">
+                    <div class="userhead" data-type="update_avatar"> <a href="myprofile.html" style="display:block;"> <img src="../static/img/logo.png" th:src="@{${sessuser?.image}}" alt="$!{sessuser?.nickname}" width="96px;" height="96px;" /> <span class="change-userhead">更改</span> </a> </div>
+                  </div>
+                  <div class="myshow">
+                    <div class="myname" th:text="${sessuser?.nickname}">网星教育</div>
+                    <div class="Email" th:text="${sessuser?.account}">12345@qq.com</div>
+                    <div class="signature" th:text="${sessuser?.mood}">今天是个好天气</div>
+                    <!-- <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored me_" href="myprofile.htm"> 我的账户 </a> --> 
+                    <a class="mdl-js-button mdl-button--raised mdl-js-ripple-effect btn btn-colored btn-sm m-r-5" href="myprofile.html">我的账户</a>
+                    <a class="mdl-js-button mdl-button--raised mdl-js-ripple-effect btn btn-default btn-sm" href="myconfig.html">设置</a> </div>
+                </div>
+                <!--myInfo end--> 
+              </div>
+              <a href="javascript:void(0);" class="lv-footer m-t-10 loginOut" id="JLogout">退出</a> 
+            </div>
+          </ul>
+        </div><!--wrapper end-->
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <div class="profile-menu"> <a href="u.html" style="background:rgba(0, 0, 0, 0) url('../static/img/banner6.jpg') no-repeat scroll left top / 100% auto">
+      <div class="profile-pic"> <img src="../static/img/logo.png" th:src="@{${sessuser?.image}}" alt="" /> </div>
+      <div class="profile-info">网星<i class="material-icons">arrow_drop_down</i> </div>
+      </a>
+      <ul class="main-menu">
+        <li> <a href="home.html"><i class="material-icons">person</i> 我的主页</a></li>
+        <li> <a href="albums.html"><i class="material-icons">photo_camera</i> 相册</a></li>
+      </ul>
+    </div>
+    <nav class="mdl-navigation main-menu">
+      <a class="mdl-navigation__link" href="index.html"><i class="material-icons">home</i> 首页</a>
+      <a class="mdl-navigation__link" href="communitiesl.html"><i class="material-icons">forum</i> 社群</a>
+      <a class="mdl-navigation__link" href="courses.html"><i class="material-icons">school</i> 课程</a>
+      <a class="mdl-navigation__link" href="events.html"><i class="material-icons">content_paste</i> 活动</a>
+      <a class="mdl-navigation__link" href="tasks.html"><i class="material-icons">access_time</i> 任务</a>
+      <a class="mdl-navigation__link" href="users.html"><i class="material-icons">supervisor_account</i> 好友</a>
+    </nav>
+  </div>
+  <div id="chat">尚未完善</div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <!-- Your content goes here -->
+      <div class="mdl-grid viewInfo content-center">
+        <ul class="breadcrumb m-breadcrumb">
+          <li><a href="#">首页</a></li>
+          <li><a href="#">社群</a></li>
+          <li><a href="#">2015-2016学年产学研成果展</a></li>
+          <li><a href="#">课程项目</a></li>
+          <li><a href="#">任务</a></li>
+        </ul>
+        <!--breadcrumb end-->
+        <div class="mdl-cell mdl-cell--12-col">
+          <div class="lv-header-alt clearfix">
+            <div class="lvh-label">
+              <strong  th:text="${info?.title}">Android mvp 开发架构总结</strong>
+              <div class="author">
+                <div class="img-div"><img src="../static/img/face1.png" alt=""></div>
+                <a href="#">赵少锋</a>
+                <em>发布于</em><span>2017-03-04</span>
+                <em>来自</em><span>网星客户端</span>
+                <em></em><span>公开分享</span>
+              </div><!--author end-->
+            </div><!--lvh-label end-->
+            <div class="detailMenu">
+              <button id="demo-menu-lower-right1" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right1">
+                <li class="mdl-menu__item" ><a th:href="@{'/info/' + ${info?.id} + '/delete/'}" class="delete_a">删除</a></li>
+                <li class="mdl-menu__item" ><a th:href="@{'/update/' + ${info?.id}}" >修改</a></li>
+              </ul> 
+            </div>
+            <div class="card">
+              <div class="card-body card-padding">
+                <div name="infobody" class="Jcontent"> 
+                  <p class="Jtext"></p>
+                  <p th:text="${info?.content}">一转眼这周是第十八周，也是最后的一周。一个学期又过了真的好快啊！首先说说我这个学期都做了什么学到了什么。<br>
+                    这学期做了两套模板，网信平台上面的静态页现在做了有21个页面加上练习的，还有谷歌风格的页面做了6个。学到了很多收获的也很多。加上在最后几个星期里我们做的那个画册，虽然时间很短 但是我们每个人还是坚持的把各自的部分给做完了 甚至最后还加班做了很晚，但是到最后把书给印刷出来到展示给所有人看的时候 那时候才发现这一切都是值得的。我也没想到做出来的效果比想象中的好很多，也让我从中学到了很多的东西，看到了与之前我们所见过的画册有所不同的特点，相信下一次再做这个画册会比这次做的更加的好。这次做的这个画册让我感触最深的就是团队的合作十分重要，一个人的力量很小<br>
+                    不可能完成这么多的东西，但是多个人的力量就会变得很强大。就像是人多力量大，柴多火焰高。我们大家分好工 互帮互助 这才是一个真正发挥团队的好团队，所以通过这次我体会到团队合作的重要性。<br>
+                    现在说说我这学期学到了什么,通过做了一套赵氏家族的模板 我比较注重细节方面 无论是字体的大小 间距等问题包括要考虑到上传服务器之后的样子 我都做得很仔细。虽然花了一周的时间在做包括修改，但是慢工出细活，效率不是很高但是质量还可以。再者就是这学期学习了新的东西 周老师这边的网信平台。其实第一次做的时候就觉得很难，后面慢慢的练习做多了就熟练了一些。后来又学习了Material design这个让我感觉更加难了，因为之前的还没有太熟练现在又学习了Material design，我觉得这个是最难的 尽快做了一些练习但还是会觉得很难，到现在那个分列还是有点懵。接着就是学Material admin，这个的话跟bootstrap差不多 但对于我来说也有难点。后面不断的练习做出一点东西的时候就觉得只要练习做多了就不难了。所以我觉Material design最难，要利用好暑假的时间多去学习这个。还有就是暑假先把下学期要学习的东西也要先过一下，为下学期打好基础。这就是我这学期学到的东西，朝着这个目标前进 相信以后收获的会更多。</p>
+                  <p></p>
+                </div>
+                <ul class="wall-attrs clearfix list-inline list-unstyled">
+                  <li class="wa-stats"> <span><i class="material-icons">favorite</i> 0</span> <span data-type="info" data-mkey="12ff4c8388834293afd22aae9275a5ae" title="我喜欢" name="Jilike"><i class="material-icons reply">reply</i> 0</span> </li>
+                </ul>
+              </div>
+              <div name="comment_box" class="wall-comment-list">
+                <div class="commentNum">
+                  <div title="加载更多评论" name="LoadComments" th:data-url="@{'/info/'+${info?.id}+'/comments'}" class="com">
+                    <div class="word"> <a class="active"><span name="jcmcount" th:text="${info?.cmcount}">0</span> <span>条评论</span><span class="icon"> <i class="material-icons">arrow_drop_down</i> </span> </a></div>
+                  </div>
+                </div>
+                <!--评论-->
+                <div class="wcl-list" name="comment_load_box">
+                  <ul name="JCommentUl" class="comment-ul" th:remove="all-but-first">
+                    <li th:each="citem:${info?.comments}"> <a target="_blank" href="/u.htm?u=307f249c8772469ca951d999b045b415" title="网信" th:href="@{'/user/'+${citem?.user?.id}}"><img width="28px" height="28px" class="userimage" src="../static/img/header.jpg" alt="网信" th:src="@{${citem?.user?.image}}" th:alt="${citem?.user?.name}"></a>
+                      <div class="userdiv">
+                        <div class="user-info">
+                          <div class="name"><a target="_blank" href="/u.htm?u=307f249c8772469ca951d999b045b415" th:href="@{'/u/'+${citem?.user?.id}}" title="网信" th:text="${citem?.user?.name}">网信</a></div>
+                          <div class="time" th:text="${#dates.format(citem.ctime, 'yyyy-MM-dd')}">2017-2-27</div>
+                        </div>
+                        <!-- <div class="rating-container">
+                          <div name="ratecount" th:data-rate="${citem?.score}"></div>
+                          <div class="counter" th:text="${citem?.score}"></div>
+                        </div> -->
+                      </div>
+                      <div class="text" th:text="${citem?.content}">这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论这是一条长长长的评论</div>
+                    </li>
+                  </ul>
+                </div>
+                
+                <!-- Comment form -->
+                <div class="wcl-form">
+                  <div class="wc-comment">
+                    <div class="Jinput wcc-inner">发表评论…</div>
+                    <div style="" class="Jcommentform comment-form">
+                      <form method="post" action="#" th:action="@{'/info/'+${info.id}+'/comment'}" name="fm_info_cm">
+                        <a href="#"><img width="28px" height="28px" src="../static/img/face1.png" th:src="@{/img/face1.png}" alt="网信" class="userimage" /></a>
+                        <textarea placeholder="发表评论…" name="content" class="textarea"></textarea>
+                        <div class="clearfix">
+                          <input type="hidden" name="confirm" value="">
+                          <!-- <button name="btn_comment_pub" class="mdl-button mdl-js-button mdl-button--raised sendBtn" type="button">发布评论</button> -->
+                          <button name="btn_comment_pub" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect sendBtn" type="button"><a class="comment_a" th:href="@{'/info/'+${info?.id}+'/comment'}"></a>发布评论</button>
+                          <!-- <button class="Jformhide mdl-button mdl-js-button mdl-button--raised cancelBtn" type="button">取消</button> -->
+                          <button style="background: rgba(158,158,158,.2); color: inherit;" class="Jformhide mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect cancelBtn" type="button">取消</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <footer id="footer">
+            Copyright © 2013-2016 wxine.com
+            <ul class="f-menu">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">隐私权</a></li>
+                <li><a href="#">服务条款</a></li>
+                <li><a href="#">发送反馈</a></li>
+                <li><a href="#">常见问题</a></li>
+                <li><a href="#">帮助</a></li>
+                <li><a href="#">联系我们</a></li>
+             </ul>
+        </footer> 
+        <!-- <div><a th:href="@{release}">发布</a></div> -->
+      </div> 
+    </div><!--page-content end-->
+  </main>
+</div>
+
+
+<script src="../static/js/jquery-3.0.0.min.js" th:src="@{/js/jquery-3.0.0.min.js}"></script>
+<script src="../static/js/material.min.js" th:src="@{/js/material.min.js}"></script>
+<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<script>
+  $(function(){
+    // 评论切换
+    $(document).on("click", ".Jinput", function() {
+      $(this).hide().next(".Jcommentform").fadeIn("fast");
+    $(".textarea[name='content']").focus();
+    $(this).closest(".commentBox").find("[name='confirm']").val("");//加载后将变量重置
+    $(this).closest(".commentBox").find("[name='content']").val("");//加载后将变量重置
+    });
+
+    // 加载评论 ok
+    $(document).on("click","[name=LoadComments]",function(){
+        var JCommentUl = $(this).closest("[name='comment_box']").find("[name='comment_load_box']");
+        if($(this).hasClass("active")){//已添加过
+            $(this).attr("title","加载更多评论");
+            JCommentUl.load("cm_load.htm",{mkey:$(this).data("mkey"),type:$(this).data("type"),pagesize:3});
+        }else{
+            $(this).attr("title","隐藏评论");
+            JCommentUl.load("cm_load.htm",{mkey:$(this).data("mkey"),type:$(this).data("type")});
+        }
+        $(this).toggleClass("active");$(this).children("i").toggleClass("top");
+    $("[name=arrow-icon]").toggleClass("active");
+    });
+
+    // 隐藏评论表单
+    $(document).on("click", ".Jformhide", function() {
+        $(this).parents(".Jcommentform").hide().prev(".Jinput").show();
+    });
+
+    // 点击阅读全文显示全部内容
+    $(document).on("click", "[name='infobody']", function() {
+        $(this).toggleClass("Jcontent");
+    });
+
+    // 分享新鲜事
+    $(".placeholder, .home-start").on("click", function(){  //点到分享新鲜事或者是home键
+      $("[name='simple']").slideDown();
+    })
+    $("[name='btn_box_asyncload_close']").on("click", function(){   //点击×或取消
+      $("[name='simple']").slideUp();
+      $("[name='full']").slideUp();
+      $("[name='photos']").slideUp();
+    })
+    $("[name='d_info_full']").on("click", function(){  //完整发布
+      $("[name='simple']").hide();
+      $("[name='full']").slideDown();
+      $(".markdown").load("markdown.html", function(){  //load加载markdown
+          $(".markdown").slideDown();
+          try {componentHandler.upgradeDom();}catch(e){};
+      });
+    })
+    $("[name='d_info_simple']").on("click", function(){  //简单发布
+      $("[name='full']").hide();
+      $("[name='simple']").slideDown();
+    })
+    $("[name='basic-camera']").on("click", function(){  //发布照片
+      $("[name='photos']").slideDown();
+    })
+     $("[name='btn_box_asyncload_close_photos']").on("click", function(){   //相册点击×或取消
+      $("[name='photos']").slideUp();
+    })
+    // 分享新鲜事 end
+  })
+  
+  // 删除按钮
+  $(".delete_a").on("click",function(event){
+	  event.preventDefault();//使a自带的方法失效，即无法调整到href中的URL(http://www.baidu.com)
+	  $.post($(this).attr("href") ,
+			  function(returndata){
+		  window.location.href = "/";
+	  });   
+	});
+  // 删除按钮 end
+  
+  // 日期
+	function date2str(x, y) {
+   		var z = {
+      		y: x.getFullYear(),
+      		M: x.getMonth() + 1,
+      		d: x.getDate()
+   		};
+   		return y.replace(/(y+|M+|d+|h+|m+|s+)/g, function(v) {
+      	return ((v.length > 1 ? "0" : "") + eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2))
+   		});
+	}
+	// 日期 end
+  
+  	// 发布评论
+	$("*[name='btn_comment_pub']").on("click", function(){
+		var commentul = $(this).parents(".wall-comment-list").find("[name='JCommentUl']");
+		var com = $(this).parent().parent().find(".textarea").val();
+		$.post($(this).find(".comment_a").attr("href"),{"scope" : "public","markdown" : "markdown","status" : "home","like" : "0","cmcount" : "0","sharecount" : "0","readcount" : "0","ctime" : "2015-08-24 18:11:58","content" : $(this).parent().parent().find(".textarea").val(),"title" : $('*[name=title]').val()},
+	    	    function(data,status){
+	    	    	commentul.prepend("<li> <a target=\"_blank\" href=\"/user/null\" title=\"网信\"><img class=\"userimage\" src=\"\" width=\"28px\" height=\"28px\"></a><div class=\"userdiv\"><div class=\"user-info\"><div class=\"name\"><a target=\"_blank\" href=\"/u/null\" title=\"网信\"></a></div><div class=\"time\">"+ date2str(new Date(), "yyyy-MM-d") +"</div></div></div><div class=\"text\">"+com+"</div></li>");
+	    	    	
+	    	    	$("[name='btn_comment_pub']").parent().parent().find(".textarea").val("");//清空
+	    });
+	});
+	// 发布评论 end
+</script>
+</body>
+</html>
